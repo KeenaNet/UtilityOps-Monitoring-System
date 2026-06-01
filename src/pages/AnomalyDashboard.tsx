@@ -55,7 +55,7 @@ import {
   YAxis,
 } from 'recharts'
 import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { ChartPieTooltipContent, getChartTooltipProps } from '@/components/charts/ChartTooltip'
 
 const SEVERITY_COLORS: Record<string, string> = {
   Low: chartColors.axis,
@@ -227,7 +227,7 @@ export default function AnomalyDashboard() {
                         <Cell key={entry.name} fill={SEVERITY_COLORS[entry.name] ?? chartColors.axis} />
                       ))}
                     </Pie>
-                    <Tooltip {...getChartTooltipProps()} />
+                    <Tooltip content={<ChartPieTooltipContent />} />
                     <Legend />
                   </PieChart>
                 </ResponsiveContainer>
