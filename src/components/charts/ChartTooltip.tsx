@@ -16,7 +16,7 @@ type PieTooltipEntry = {
   name?: string
   value?: number
   color?: string
-  payload?: { name?: string; value?: number }
+  payload?: { name?: string; value?: number; fill?: string }
   percent?: number
 }
 
@@ -33,7 +33,7 @@ export function ChartPieTooltipContent({
   const name = String(entry.name ?? entry.payload?.name ?? '')
   const value = Number(entry.value ?? entry.payload?.value ?? 0)
   const percent = entry.percent != null ? entry.percent * 100 : undefined
-  const sliceColor = entry.color ?? colors.axis
+  const sliceColor = entry.payload?.fill ?? entry.color ?? colors.axis
 
   return (
     <div
@@ -41,7 +41,7 @@ export function ChartPieTooltipContent({
       style={{
         backgroundColor: colors.tooltipBg,
         borderColor: colors.tooltipBorder,
-        color: colors.tooltipFg,
+        color: sliceColor,
       }}
       role="tooltip"
     >
@@ -53,7 +53,7 @@ export function ChartPieTooltipContent({
         />
         <span className="font-semibold">{name}</span>
       </div>
-      <p className="mt-1 pl-4 text-muted-foreground">
+      <p className="mt-1 pl-4 opacity-80">
         {formatNumber(value)} {value === 1 ? 'anomali' : 'anomali'}
         {percent != null && <span> · {formatPercent(percent, 1)}</span>}
       </p>

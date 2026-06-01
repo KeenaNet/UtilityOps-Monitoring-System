@@ -119,8 +119,12 @@ export default function AnomalyDashboard() {
     filtered.forEach((a) => {
       counts[a.severity] = (counts[a.severity] ?? 0) + 1
     })
-    return Object.entries(counts).map(([name, value]) => ({ name, value }))
-  }, [filtered])
+    return Object.entries(counts).map(([name, value]) => ({ 
+      name, 
+      value, 
+      fill: SEVERITY_COLORS[name] ?? chartColors.axis 
+    }))
+  }, [filtered, SEVERITY_COLORS, chartColors.axis])
 
   const areaRanking = useMemo(() => {
     const map = new Map<string, number>()

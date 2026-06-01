@@ -38,7 +38,7 @@ export default function ManualInput() {
       </div>
 
       <Tabs defaultValue="input" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-3 bg-input p-1 rounded-lg">
+        <TabsList className="grid w-full max-w-md grid-cols-3 bg-input p-1 rounded-lg h-auto gap-1">
           <TabsTrigger value="input" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Input Form</TabsTrigger>
           <TabsTrigger value="history" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">History</TabsTrigger>
           <TabsTrigger value="missing" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Missing <Badge variant="destructive" className="ml-2 px-1.5 py-0">2</Badge></TabsTrigger>

@@ -27,7 +27,7 @@ export default function MasterData() {
       </div>
 
       <Tabs defaultValue="meters" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-input p-1 rounded-lg">
+        <TabsList className="grid w-full grid-cols-4 bg-input p-1 rounded-lg h-auto gap-1">
           <TabsTrigger value="meters" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Meters</TabsTrigger>
           <TabsTrigger value="areas" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Areas & Lines</TabsTrigger>
           <TabsTrigger value="thresholds" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Thresholds</TabsTrigger>
