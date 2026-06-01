@@ -13,7 +13,7 @@ export function TablePagination({ page, pageCount, total, onPageChange }: TableP
   if (total === 0) return null
 
   return (
-    <div className="flex items-center justify-between pt-4 border-t border-white/5">
+    <div className="flex items-center justify-between pt-4 border-t border-border">
       <p className="text-xs text-muted-foreground">
         Total {formatNumber(total)} baris · Halaman {page + 1} / {pageCount}
       </p>
@@ -22,7 +22,7 @@ export function TablePagination({ page, pageCount, total, onPageChange }: TableP
           type="button"
           variant="outline"
           size="sm"
-          className="min-h-[44px] min-w-[44px] bg-black/30"
+          className="min-h-[44px] min-w-[44px] bg-muted"
           disabled={page <= 0}
           onClick={() => onPageChange(page - 1)}
           aria-label="Halaman sebelumnya"
@@ -33,7 +33,7 @@ export function TablePagination({ page, pageCount, total, onPageChange }: TableP
           type="button"
           variant="outline"
           size="sm"
-          className="min-h-[44px] min-w-[44px] bg-black/30"
+          className="min-h-[44px] min-w-[44px] bg-muted"
           disabled={page >= pageCount - 1}
           onClick={() => onPageChange(page + 1)}
           aria-label="Halaman berikutnya"

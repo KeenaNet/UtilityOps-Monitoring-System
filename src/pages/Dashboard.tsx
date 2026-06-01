@@ -22,8 +22,8 @@ import {
   topAbnormalMeters,
   trendData24h,
 } from '@/data/mockDashboard'
-import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { useChartTheme } from '@/components/charts/chartTheme'
+import { useChartTooltipProps } from '@/components/charts/ChartTooltip'
 import {
   Zap,
   Droplets,
@@ -47,6 +47,8 @@ import {
 
 export default function Dashboard() {
   const { filters, navigate } = useAppState()
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
 
   const filteredMeters = useMemo(
     () =>
@@ -164,7 +166,7 @@ export default function Dashboard() {
                   <XAxis dataKey="time" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} tickFormatter={(v) => formatNumber(Number(v))} />
                   <Tooltip
-                    {...getChartTooltipProps()}
+                    {...chartTooltipProps}
                     formatter={(value: number, name: string) => [
                       name === 'pressure'
                         ? formatWithUnit(value, 'Bar', 1)
@@ -219,7 +221,7 @@ export default function Dashboard() {
                   <CartesianGrid {...chartGridProps} />
                   <XAxis dataKey="shift" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} tickFormatter={(v) => formatNumber(Number(v))} />
-                  <Tooltip {...getChartTooltipProps()} />
+                  <Tooltip {...chartTooltipProps} />
                   <Legend />
                   <Bar dataKey="electricity" name="Electricity" fill={chartColors.primary} radius={[4, 4, 0, 0]} />
                   <Bar dataKey="compressor" name="Compressor" fill={chartColors.violet} radius={[4, 4, 0, 0]} />
@@ -254,7 +256,7 @@ export default function Dashboard() {
                       {filteredMeters.map((m) => (
                         <TableRow
                           key={m.meter}
-                          className="cursor-pointer hover:bg-white/5"
+                          className="cursor-pointer hover:bg-accent"
                           onClick={() =>
                             navigate('anomaly', {
                               filters: {

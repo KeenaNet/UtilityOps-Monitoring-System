@@ -5,8 +5,8 @@ import { PageShell } from '@/components/common/PageShell'
 import { useAppState } from '@/context/AppState'
 import { shiftAnomalies, shiftComparison, shiftTrend } from '@/data/mockShift'
 import { formatNumber, formatWithUnit } from '@/lib/format'
-import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { useChartTheme } from '@/components/charts/chartTheme'
+import { useChartTooltipProps } from '@/components/charts/ChartTooltip'
 import { Zap, Droplets, Gauge, AlertTriangle } from 'lucide-react'
 import {
   BarChart,
@@ -22,6 +22,8 @@ import {
 } from 'recharts'
 
 export default function ShiftDashboard() {
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
   const { navigate } = useAppState()
 
   const totalElec = shiftComparison.find((r) => r.metric === 'Electricity')
@@ -88,7 +90,7 @@ export default function ShiftDashboard() {
                   <CartesianGrid {...chartGridProps} />
                   <XAxis dataKey="metric" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} />
-                  <Tooltip {...getChartTooltipProps()} />
+                  <Tooltip {...chartTooltipProps} />
                   <Legend />
                   <Bar dataKey="shift1" name="Shift 1" fill={chartColors.primary} radius={[4, 4, 0, 0]} />
                   <Bar dataKey="shift2" name="Shift 2" fill={chartColors.violet} radius={[4, 4, 0, 0]} />
@@ -108,7 +110,7 @@ export default function ShiftDashboard() {
                   <CartesianGrid {...chartGridProps} />
                   <XAxis dataKey="day" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} />
-                  <Tooltip {...getChartTooltipProps()} />
+                  <Tooltip {...chartTooltipProps} />
                   <Legend />
                   <Line type="monotone" dataKey="s1" name="Shift 1" stroke={chartColors.primary} strokeWidth={2} dot={false} />
                   <Line type="monotone" dataKey="s2" name="Shift 2" stroke={chartColors.violet} strokeWidth={2} dot={false} />
@@ -128,7 +130,7 @@ export default function ShiftDashboard() {
               <button
                 key={s.shift}
                 type="button"
-                className="rounded-lg border border-white/5 p-4 text-left hover:bg-white/5 transition-colors min-h-[44px]"
+                className="rounded-lg border border-border p-4 text-left hover:bg-accent transition-colors min-h-[44px]"
                 onClick={() => navigate('anomaly')}
               >
                 <p className="font-medium">{s.shift}</p>

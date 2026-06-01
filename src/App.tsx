@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { AppStateProvider, useAppState } from '@/context/AppState'
+import { SettingsProvider } from '@/context/SettingsContext'
 import Login from '@/pages/Login'
 import Dashboard from '@/pages/Dashboard'
 import ManualInput from '@/pages/ManualInput'
@@ -61,11 +62,15 @@ function AuthenticatedApp({ onLogout }: { onLogout: () => void }) {
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />
-  }
-
-  return <AuthenticatedApp onLogout={() => setIsAuthenticated(false)} />
+  return (
+    <SettingsProvider>
+      {!isAuthenticated ? (
+        <Login onLogin={() => setIsAuthenticated(true)} />
+      ) : (
+        <AuthenticatedApp onLogout={() => setIsAuthenticated(false)} />
+      )}
+    </SettingsProvider>
+  )
 }
 
 export default App

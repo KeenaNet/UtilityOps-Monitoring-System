@@ -20,14 +20,14 @@ export default function MasterData() {
   return (
     <div className="flex-1 overflow-auto bg-background/50 p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight text-white">Master Data</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Master Data</h1>
         <Button className="gap-2 min-h-[44px]">
           <Plus className="w-4 h-4" /> Add New Record
         </Button>
       </div>
 
       <Tabs defaultValue="meters" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-black/50 p-1 rounded-lg">
+        <TabsList className="grid w-full grid-cols-4 bg-input p-1 rounded-lg">
           <TabsTrigger value="meters" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Meters</TabsTrigger>
           <TabsTrigger value="areas" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Areas & Lines</TabsTrigger>
           <TabsTrigger value="thresholds" className="min-h-[40px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Thresholds</TabsTrigger>
@@ -40,7 +40,7 @@ export default function MasterData() {
               <CardTitle>Utility Meters</CardTitle>
               <div className="relative w-64">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search meters..." className="pl-8 bg-black/50 min-h-[44px]" />
+                <Input placeholder="Search meters..." className="pl-8 bg-input min-h-[44px]" />
               </div>
             </CardHeader>
             <CardContent>

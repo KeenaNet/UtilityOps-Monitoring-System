@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { DateRange } from 'react-day-picker'
+import { readDefaultView } from '@/lib/settingsStorage'
 
 export type AppPage =
   | 'executive'
@@ -53,6 +54,7 @@ export const defaultFilters: AppFilters = {
   dateRange: undefined,
 }
 
+/** @deprecated Use useSettings().t(pageTitleKeyByPage[page]) instead */
 export const pageTitles: Record<AppPage, string> = {
   executive: 'Executive Summary',
   dashboard: 'Operational Dashboard',
@@ -75,7 +77,10 @@ type AppStateContextValue = {
   activePage: AppPage
   filters: AppFilters
   sidebarOpen: boolean
+  sidebarCollapsed: boolean
   setSidebarOpen: (open: boolean) => void
+  setSidebarCollapsed: (collapsed: boolean) => void
+  toggleSidebar: () => void
   setFilters: (patch: Partial<AppFilters>) => void
   resetFilters: () => void
   navigate: (page: AppPage, options?: NavigateOptions) => void
@@ -84,9 +89,10 @@ type AppStateContextValue = {
 const AppStateContext = createContext<AppStateContextValue | null>(null)
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
-  const [activePage, setActivePage] = useState<AppPage>('dashboard')
+  const [activePage, setActivePage] = useState<AppPage>(() => readDefaultView())
   const [filters, setFiltersState] = useState<AppFilters>(defaultFilters)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   const setFilters = useCallback((patch: Partial<AppFilters>) => {
     setFiltersState((prev) => ({ ...prev, ...patch }))
@@ -108,17 +114,37 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const toggleSidebar = useCallback(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches) {
+      setSidebarOpen((prev) => !prev)
+    } else {
+      setSidebarCollapsed((prev) => !prev)
+    }
+  }, [])
+
   const value = useMemo(
     () => ({
       activePage,
       filters,
       sidebarOpen,
+      sidebarCollapsed,
       setSidebarOpen,
+      setSidebarCollapsed,
+      toggleSidebar,
       setFilters,
       resetFilters,
       navigate,
     }),
-    [activePage, filters, sidebarOpen, setFilters, resetFilters, navigate]
+    [
+      activePage,
+      filters,
+      sidebarOpen,
+      sidebarCollapsed,
+      setFilters,
+      resetFilters,
+      navigate,
+      toggleSidebar,
+    ]
   )
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>

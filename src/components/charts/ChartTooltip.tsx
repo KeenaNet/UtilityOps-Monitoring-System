@@ -1,25 +1,14 @@
 import type { TooltipProps } from 'recharts'
 import { formatNumber, formatPercent } from '@/lib/format'
-import { chartColors, chartTooltipStyle } from './chartTheme'
+import { useChartTheme } from './chartTheme'
 
-const tooltipTextColor = 'hsl(213 31% 91%)'
-const tooltipMutedColor = 'hsl(215 16% 70%)'
-
-export const chartTooltipLabelStyle = {
-  color: tooltipTextColor,
-  fontWeight: 600,
-}
-
-export const chartTooltipItemStyle = {
-  color: tooltipTextColor,
-}
-
-export function getChartTooltipProps() {
+export function useChartTooltipProps() {
+  const { tooltipStyle, colors } = useChartTheme()
   return {
-    contentStyle: chartTooltipStyle,
-    labelStyle: chartTooltipLabelStyle,
-    itemStyle: chartTooltipItemStyle,
-    cursor: { fill: 'rgba(255,255,255,0.06)' },
+    contentStyle: tooltipStyle,
+    labelStyle: { color: colors.tooltipFg, fontWeight: 600 },
+    itemStyle: { color: colors.tooltipFg },
+    cursor: { fill: 'hsl(var(--surface))' },
   }
 }
 
@@ -36,20 +25,23 @@ export function ChartPieTooltipContent({
   active,
   payload,
 }: TooltipProps<number, string>) {
+  const { colors } = useChartTheme()
+
   if (!active || !payload?.length) return null
 
   const entry = payload[0] as PieTooltipEntry
   const name = String(entry.name ?? entry.payload?.name ?? '')
   const value = Number(entry.value ?? entry.payload?.value ?? 0)
   const percent = entry.percent != null ? entry.percent * 100 : undefined
-  const sliceColor = entry.color ?? chartColors.axis
+  const sliceColor = entry.color ?? colors.axis
 
   return (
     <div
       className="rounded-lg border px-3 py-2 text-sm shadow-lg"
       style={{
-        backgroundColor: chartColors.tooltipBg,
-        borderColor: chartColors.tooltipBorder,
+        backgroundColor: colors.tooltipBg,
+        borderColor: colors.tooltipBorder,
+        color: colors.tooltipFg,
       }}
       role="tooltip"
     >
@@ -59,15 +51,11 @@ export function ChartPieTooltipContent({
           style={{ backgroundColor: sliceColor }}
           aria-hidden
         />
-        <span className="font-semibold" style={{ color: tooltipTextColor }}>
-          {name}
-        </span>
+        <span className="font-semibold">{name}</span>
       </div>
-      <p className="mt-1 pl-4" style={{ color: tooltipTextColor }}>
+      <p className="mt-1 pl-4 text-muted-foreground">
         {formatNumber(value)} {value === 1 ? 'anomali' : 'anomali'}
-        {percent != null && (
-          <span style={{ color: tooltipMutedColor }}> · {formatPercent(percent, 1)}</span>
-        )}
+        {percent != null && <span> · {formatPercent(percent, 1)}</span>}
       </p>
     </div>
   )

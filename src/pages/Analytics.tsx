@@ -16,8 +16,8 @@ import {
 } from '@/data/mockAnalytics'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Download, FileSpreadsheet } from 'lucide-react'
-import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { useChartTheme } from '@/components/charts/chartTheme'
+import { useChartTooltipProps } from '@/components/charts/ChartTooltip'
 import {
   Bar,
   BarChart,
@@ -43,6 +43,8 @@ const DIMENSIONS: AnalyticsDimension[] = [
 ]
 
 export default function Analytics() {
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
   const { filters } = useAppState()
   const [dimension, setDimension] = useState<AnalyticsDimension>('shift')
 
@@ -116,14 +118,14 @@ export default function Analytics() {
         <div className="flex flex-wrap gap-2 justify-end">
           <Button
             variant="outline"
-            className="gap-2 min-h-[44px] bg-black/30"
+            className="gap-2 min-h-[44px] bg-muted"
             onClick={handleExportExcel}
           >
             <FileSpreadsheet className="w-4 h-4" /> Excel
           </Button>
           <Button
             variant="outline"
-            className="gap-2 min-h-[44px] bg-black/30"
+            className="gap-2 min-h-[44px] bg-muted"
             onClick={handleExportPdf}
           >
             <Download className="w-4 h-4" /> PDF
@@ -135,7 +137,7 @@ export default function Analytics() {
         </p>
 
         <Tabs value={dimension} onValueChange={(v) => setDimension(v as AnalyticsDimension)}>
-          <TabsList className="flex flex-wrap h-auto gap-1 bg-black/40 p-1">
+          <TabsList className="flex flex-wrap h-auto gap-1 bg-muted p-1">
             {DIMENSIONS.map((d) => (
               <TabsTrigger
                 key={d}
@@ -172,7 +174,7 @@ export default function Analytics() {
                               <CartesianGrid {...chartGridProps} />
                               <XAxis dataKey="label" {...chartAxisProps} />
                               <YAxis {...chartAxisProps} tickFormatter={(v) => formatNumber(Number(v))} />
-                              <Tooltip {...getChartTooltipProps()} formatter={(v: number) => formatNumber(v)} />
+                              <Tooltip {...chartTooltipProps} formatter={(v: number) => formatNumber(v)} />
                               <Legend />
                               <Bar dataKey="shift1" name="Shift 1" fill={chartColors.primary} radius={[4, 4, 0, 0]} />
                               <Bar dataKey="shift2" name="Shift 2" fill={chartColors.violet} radius={[4, 4, 0, 0]} />
@@ -183,7 +185,7 @@ export default function Analytics() {
                               <CartesianGrid {...chartGridProps} />
                               <XAxis dataKey="label" {...chartAxisProps} />
                               <YAxis {...chartAxisProps} tickFormatter={(v) => formatNumber(Number(v))} />
-                              <Tooltip {...getChartTooltipProps()} formatter={(v: number) => formatNumber(v)} />
+                              <Tooltip {...chartTooltipProps} formatter={(v: number) => formatNumber(v)} />
                               <Legend />
                               <Bar dataKey="actual" name="Actual" fill={chartColors.primary} radius={[4, 4, 0, 0]} />
                             </BarChart>
@@ -202,7 +204,7 @@ export default function Analytics() {
                             <CartesianGrid {...chartGridProps} />
                             <XAxis dataKey="label" {...chartAxisProps} />
                             <YAxis {...chartAxisProps} tickFormatter={(v) => formatNumber(Number(v))} />
-                            <Tooltip {...getChartTooltipProps()} formatter={(v: number) => formatNumber(v)} />
+                            <Tooltip {...chartTooltipProps} formatter={(v: number) => formatNumber(v)} />
                             <Legend />
                             <Line
                               type="monotone"

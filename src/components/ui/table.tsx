@@ -2,14 +2,14 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto rounded-md border border-white/10">
+  <div className="relative w-full overflow-auto rounded-md border border-border">
     <table ref={ref} className={cn("w-full caption-bottom text-sm", className)} {...props} />
   </div>
 ))
 Table.displayName = "Table"
 
 const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("[&_tr]:border-b border-white/10 bg-white/5", className)} {...props} />
+  <thead ref={ref} className={cn("[&_tr]:border-b border-border bg-muted/50", className)} {...props} />
 ))
 TableHeader.displayName = "TableHeader"
 
@@ -19,12 +19,12 @@ const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes
 TableBody.displayName = "TableBody"
 
 const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={cn("border-t border-white/10 bg-white/5 font-medium", className)} {...props} />
+  <tfoot ref={ref} className={cn("border-t border-border bg-muted/50 font-medium", className)} {...props} />
 ))
 TableFooter.displayName = "TableFooter"
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(({ className, ...props }, ref) => (
-  <tr ref={ref} className={cn("border-b border-white/10 transition-colors hover:bg-white/5 data-[state=selected]:bg-white/10", className)} {...props} />
+  <tr ref={ref} className={cn("border-b border-border transition-colors hover:bg-accent data-[state=selected]:bg-accent", className)} {...props} />
 ))
 TableRow.displayName = "TableRow"
 

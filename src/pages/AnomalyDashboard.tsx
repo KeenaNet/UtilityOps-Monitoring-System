@@ -54,14 +54,16 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { ChartPieTooltipContent, getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { useChartTheme } from '@/components/charts/chartTheme'
+import { ChartPieTooltipContent, useChartTooltipProps } from '@/components/charts/ChartTooltip'
 
-const SEVERITY_COLORS: Record<string, string> = {
-  Low: chartColors.axis,
-  Medium: chartColors.amber,
-  High: '#f97316',
-  Critical: chartColors.rose,
+function severityColors(chartColors: ReturnType<typeof useChartTheme>['colors']): Record<string, string> {
+  return {
+    Low: chartColors.axis,
+    Medium: chartColors.amber,
+    High: '#f97316',
+    Critical: chartColors.rose,
+  }
 }
 
 function severityVariant(severity: string) {
@@ -82,6 +84,9 @@ function statusLabel(status: string) {
 
 export default function AnomalyDashboard() {
   const { filters, navigate } = useAppState()
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
+  const SEVERITY_COLORS = useMemo(() => severityColors(chartColors), [chartColors])
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const filtered = useMemo(() => {
@@ -254,7 +259,7 @@ export default function AnomalyDashboard() {
                       <span className="text-sm font-medium">{item.area}</span>
                       <Badge variant="outline">{formatNumber(item.count)} events</Badge>
                     </div>
-                    <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-input rounded-full overflow-hidden">
                       <div
                         className="h-full bg-primary transition-all"
                         style={{ width: `${(item.count / maxAreaCount) * 100}%` }}
@@ -284,7 +289,7 @@ export default function AnomalyDashboard() {
                     <CartesianGrid {...chartGridProps} />
                     <XAxis dataKey="point" {...chartAxisProps} />
                     <YAxis {...chartAxisProps} />
-                    <Tooltip {...getChartTooltipProps()} formatter={(v: number) => formatNumber(v)} />
+                    <Tooltip {...chartTooltipProps} formatter={(v: number) => formatNumber(v)} />
                     <Bar dataKey="value" name="Value" radius={[4, 4, 0, 0]}>
                       <Cell fill={chartColors.emerald} />
                       <Cell fill={chartColors.rose} />
@@ -332,7 +337,7 @@ export default function AnomalyDashboard() {
                           <TableRow
                             key={anomaly.id}
                             className={
-                              selectedId === anomaly.id ? 'bg-primary/5' : 'cursor-pointer hover:bg-white/5'
+                              selectedId === anomaly.id ? 'bg-primary/5' : 'cursor-pointer hover:bg-accent'
                             }
                             onClick={() => setSelectedId(anomaly.id)}
                           >
@@ -384,6 +389,8 @@ export default function AnomalyDashboard() {
 }
 
 function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
   const delta = deltaPercent(anomaly.actual, anomaly.baseline)
 
   return (
@@ -392,13 +399,13 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
         <Button
           variant="outline"
           size="sm"
-          className="gap-1 bg-black/20 hover:bg-black/40 min-h-[44px] min-w-[44px]"
+          className="gap-1 bg-muted hover:bg-muted min-h-[44px] min-w-[44px]"
         >
           <Eye className="w-4 h-4" />
           <span className="hidden sm:inline">Details</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[520px] glass-card border-white/10">
+      <DialogContent className="sm:max-w-[520px] glass-card border-border">
         <DialogHeader>
           <DialogTitle>Anomaly Details — {anomaly.id}</DialogTitle>
           <DialogDescription>Review metrics and update follow-up.</DialogDescription>
@@ -434,7 +441,7 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
                 <CartesianGrid {...chartGridProps} />
                 <XAxis dataKey="t" {...chartAxisProps} />
                 <YAxis {...chartAxisProps} />
-                <Tooltip {...getChartTooltipProps()} />
+                <Tooltip {...chartTooltipProps} />
                 <Line type="monotone" dataKey="v" stroke={chartColors.primary} strokeWidth={2} dot={{ r: 4 }} />
               </LineChart>
             </ResponsiveContainer>
@@ -444,7 +451,7 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
               Assign PIC
             </Label>
             <Select defaultValue={anomaly.pic === 'Unassigned' ? 'unassigned' : 'eng1'}>
-              <SelectTrigger id={`pic-${anomaly.id}`} className="col-span-3 bg-black/50 min-h-[44px]">
+              <SelectTrigger id={`pic-${anomaly.id}`} className="col-span-3 bg-input min-h-[44px]">
                 <SelectValue placeholder="Select PIC" />
               </SelectTrigger>
               <SelectContent>
@@ -468,7 +475,7 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
               id={`rc-${anomaly.id}`}
               defaultValue={anomaly.rootCause}
               placeholder="Identify the root cause..."
-              className="col-span-3 bg-black/50 min-h-[44px]"
+              className="col-span-3 bg-input min-h-[44px]"
             />
           </div>
           <div className="grid grid-cols-4 items-start gap-4">
@@ -479,12 +486,12 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
               id={`ca-${anomaly.id}`}
               defaultValue={anomaly.correctiveAction}
               placeholder="Describe corrective action..."
-              className="col-span-3 bg-black/50 min-h-[44px]"
+              className="col-span-3 bg-input min-h-[44px]"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" variant="outline" className="bg-black/20 hover:bg-black/40 min-h-[44px]">
+          <Button type="button" variant="outline" className="bg-muted hover:bg-muted min-h-[44px]">
             Save Draft
           </Button>
           <Button type="button" className="bg-red-500 hover:bg-red-600 text-white min-h-[44px]">

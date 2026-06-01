@@ -142,13 +142,13 @@ export default function AlarmCenter() {
                                   <Button
                                     variant="outline"
                                     size="sm"
-                                    className="gap-1 bg-black/20 hover:bg-black/40 min-h-[44px] min-w-[44px]"
+                                    className="gap-1 bg-muted hover:bg-muted min-h-[44px] min-w-[44px]"
                                   >
                                     <Eye className="w-4 h-4" />
                                     <span className="hidden sm:inline">Details</span>
                                   </Button>
                                 </DialogTrigger>
-                                <DialogContent className="sm:max-w-[500px] glass-card border-white/10">
+                                <DialogContent className="sm:max-w-[500px] glass-card border-border">
                                   <DialogHeader>
                                     <DialogTitle>Alarm Details — {alarm.id}</DialogTitle>
                                     <DialogDescription>
@@ -173,7 +173,7 @@ export default function AlarmCenter() {
                                       <Select defaultValue="unassigned">
                                         <SelectTrigger
                                           id={`pic-${alarm.id}`}
-                                          className="col-span-3 bg-black/50 min-h-[44px]"
+                                          className="col-span-3 bg-input min-h-[44px]"
                                         >
                                           <SelectValue placeholder="Select PIC" />
                                         </SelectTrigger>
@@ -200,7 +200,7 @@ export default function AlarmCenter() {
                                       <Textarea
                                         id={`root-${alarm.id}`}
                                         placeholder="Identify the root cause..."
-                                        className="col-span-3 bg-black/50 min-h-[44px]"
+                                        className="col-span-3 bg-input min-h-[44px]"
                                       />
                                     </div>
                                     <div className="grid grid-cols-4 items-start gap-4">
@@ -213,7 +213,7 @@ export default function AlarmCenter() {
                                       <Textarea
                                         id={`action-${alarm.id}`}
                                         placeholder="Describe corrective action..."
-                                        className="col-span-3 bg-black/50 min-h-[44px]"
+                                        className="col-span-3 bg-input min-h-[44px]"
                                       />
                                     </div>
                                   </div>
@@ -221,7 +221,7 @@ export default function AlarmCenter() {
                                     <Button
                                       type="button"
                                       variant="outline"
-                                      className="bg-black/20 hover:bg-black/40 min-h-[44px]"
+                                      className="bg-muted hover:bg-muted min-h-[44px]"
                                     >
                                       Save Draft
                                     </Button>
@@ -239,7 +239,7 @@ export default function AlarmCenter() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="gap-1 bg-black/20 hover:bg-black/40 text-blue-400 border-blue-400/30 min-h-[44px] min-w-[44px]"
+                                  className="gap-1 bg-muted hover:bg-muted text-blue-400 border-blue-400/30 min-h-[44px] min-w-[44px]"
                                 >
                                   <Check className="w-4 h-4" />
                                   <span className="hidden sm:inline">Ack</span>
@@ -249,7 +249,7 @@ export default function AlarmCenter() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="gap-1 bg-black/20 hover:bg-black/40 text-red-400 border-red-400/30 min-h-[44px] min-w-[44px]"
+                                  className="gap-1 bg-muted hover:bg-muted text-red-400 border-red-400/30 min-h-[44px] min-w-[44px]"
                                 >
                                   <X className="w-4 h-4" />
                                   <span className="hidden sm:inline">Close</span>

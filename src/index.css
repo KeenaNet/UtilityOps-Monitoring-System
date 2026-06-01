@@ -34,45 +34,51 @@
 }
 
 @layer base {
-  :root {
-    color-scheme: dark;
+  :root,
+  [data-theme='dark'] {
     /* Sleek Dark Mode Theme (Industrial) */
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
-    
+
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
-    
+
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
-    
+
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
-    
+
     --border: 216 34% 17%;
     --input: 216 34% 17%;
-    
-    --primary: 210 40% 98%;
+
+    --primary: 217 91% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
-    
+
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
-    
+
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
-    
+
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    
-    --ring: 216 34% 17%;
-    
+
+    --ring: 217 91% 60%;
+
     --radius: 0.5rem;
+
+    --surface: 0 0% 100% / 0.05;
+    --surface-hover: 0 0% 100% / 0.08;
+    --surface-border: 0 0% 100% / 0.1;
+    --surface-muted: 0 0% 100% / 0.05;
 
     /* Chart tokens (Recharts) */
     --chart-grid: 216 34% 17%;
     --chart-axis: 215.4 16.3% 56.9%;
     --chart-tooltip-bg: 224 71% 6%;
     --chart-tooltip-border: 216 34% 25%;
+    --chart-tooltip-fg: 213 31% 91%;
     --chart-primary: 217 91% 60%;
     --chart-cyan: 187 85% 53%;
     --chart-emerald: 160 84% 39%;
@@ -80,6 +86,56 @@
     --chart-amber: 45 93% 47%;
     --chart-violet: 258 90% 66%;
     --chart-teal: 172 66% 50%;
+  }
+
+  [data-theme='light'] {
+    /* High Contrast Light Mode */
+    --background: 210 40% 98%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 40%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214 32% 85%;
+    --input: 214 32% 91%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 94%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 221 83% 53%;
+
+    --surface: 222.2 47.4% 11.2% / 0.04;
+    --surface-hover: 222.2 47.4% 11.2% / 0.08;
+    --surface-border: 222.2 47.4% 11.2% / 0.12;
+    --surface-muted: 222.2 47.4% 11.2% / 0.06;
+
+    --chart-grid: 214 32% 85%;
+    --chart-axis: 215.4 16.3% 40%;
+    --chart-tooltip-bg: 0 0% 100%;
+    --chart-tooltip-border: 214 32% 85%;
+    --chart-tooltip-fg: 222.2 47.4% 11.2%;
+    --chart-primary: 221 83% 53%;
+    --chart-cyan: 187 85% 40%;
+    --chart-emerald: 160 84% 30%;
+    --chart-rose: 350 89% 50%;
+    --chart-amber: 38 92% 40%;
+    --chart-violet: 258 90% 55%;
+    --chart-teal: 172 66% 38%;
   }
 }
 
@@ -93,12 +149,28 @@
   }
 }
 
-/* Glassmorphism utilities */
+/* Glassmorphism utilities — theme-aware */
 .glass {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
+  background: hsl(var(--surface));
+  backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--surface-border));
 }
 .glass-card {
-  @apply bg-card/80 backdrop-blur-lg border border-white/5 shadow-2xl;
+  background: hsl(var(--card) / 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--surface-border));
+  box-shadow:
+    0 4px 6px -1px hsl(222.2 47.4% 11.2% / 0.08),
+    0 2px 4px -2px hsl(222.2 47.4% 11.2% / 0.06);
+}
+
+[data-theme='dark'] .glass-card {
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+.surface-muted {
+  background: hsl(var(--surface-muted));
+  border: 1px solid hsl(var(--surface-border));
 }
 
 /* Custom Scrollbar for Popovers */
@@ -109,9 +181,9 @@
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(var(--surface-border));
   border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: hsl(var(--muted-foreground) / 0.4);
 }

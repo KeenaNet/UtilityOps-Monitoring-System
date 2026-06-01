@@ -112,7 +112,7 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
       <PopoverTrigger asChild>
         <div 
           className={cn(
-            "flex h-10 w-full items-center justify-between rounded-md border border-input bg-black/50 px-3 py-2 text-sm ring-offset-background transition-colors hover:bg-black/70 cursor-text",
+            "flex h-10 w-full items-center justify-between rounded-md border border-input bg-input px-3 py-2 text-sm ring-offset-background transition-colors hover:bg-accent cursor-text",
             isOpen ? "ring-2 ring-primary/50 ring-offset-2 ring-offset-background" : "focus-within:ring-2 focus-within:ring-primary/50 focus-within:ring-offset-2 focus-within:ring-offset-background"
           )}
           onClick={(e) => {
@@ -130,7 +130,7 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
               onBlur={handleHourBlur}
               onKeyDown={(e) => handleKeyDown(e, 'hour')}
               onFocus={() => setFocusSegment('hour')}
-              className="w-6 bg-transparent text-center focus:outline-none selection:bg-primary/50 text-white"
+              className="w-6 bg-transparent text-center focus:outline-none selection:bg-primary/50 text-foreground"
               maxLength={2}
             />
             <span className="text-muted-foreground font-bold pb-0.5 select-none">:</span>
@@ -142,7 +142,7 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
               onBlur={handleMinuteBlur}
               onKeyDown={(e) => handleKeyDown(e, 'minute')}
               onFocus={() => setFocusSegment('minute')}
-              className="w-6 bg-transparent text-center focus:outline-none selection:bg-primary/50 text-white"
+              className="w-6 bg-transparent text-center focus:outline-none selection:bg-primary/50 text-foreground"
               maxLength={2}
             />
           </div>
@@ -151,14 +151,14 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
             <button 
               type="button" 
               onClick={(e) => { e.stopPropagation(); increment() }} 
-              className="text-muted-foreground hover:text-white p-0.5 transition-colors focus:outline-none"
+              className="text-muted-foreground hover:text-foreground p-0.5 transition-colors focus:outline-none"
             >
               <ChevronUp className="h-3 w-3" />
             </button>
             <button 
               type="button" 
               onClick={(e) => { e.stopPropagation(); decrement() }} 
-              className="text-muted-foreground hover:text-white p-0.5 transition-colors focus:outline-none"
+              className="text-muted-foreground hover:text-foreground p-0.5 transition-colors focus:outline-none"
             >
               <ChevronDown className="h-3 w-3" />
             </button>
@@ -167,17 +167,17 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
       </PopoverTrigger>
       
       <PopoverContent 
-        className="w-auto p-0 glass-card border-white/10" 
+        className="w-auto p-0 glass-card border-border" 
         align="start"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <div className="flex h-64 w-[160px]">
-          <div className="flex-1 overflow-y-auto border-r border-white/10 p-1 custom-scrollbar" id="hour-scroll">
+          <div className="flex-1 overflow-y-auto border-r border-border p-1 custom-scrollbar" id="hour-scroll">
             {hoursList.map(h => (
               <div 
                 key={h}
                 className={cn(
-                  "px-4 py-2 text-sm text-center rounded-sm cursor-pointer hover:bg-white/10 transition-colors",
+                  "px-4 py-2 text-sm text-center rounded-sm cursor-pointer hover:bg-accent transition-colors",
                   h === hour ? "bg-primary/20 text-primary font-bold" : "text-muted-foreground"
                 )}
                 onClick={() => {
@@ -195,7 +195,7 @@ export function TimePicker({ value = "08:00", onChange }: { value?: string, onCh
               <div 
                 key={m}
                 className={cn(
-                  "px-4 py-2 text-sm text-center rounded-sm cursor-pointer hover:bg-white/10 transition-colors",
+                  "px-4 py-2 text-sm text-center rounded-sm cursor-pointer hover:bg-accent transition-colors",
                   m === minute ? "bg-primary/20 text-primary font-bold" : "text-muted-foreground"
                 )}
                 onClick={() => {

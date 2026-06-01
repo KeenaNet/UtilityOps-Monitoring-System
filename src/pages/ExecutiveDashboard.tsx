@@ -26,8 +26,8 @@ import {
   LineChart,
   Legend,
 } from 'recharts'
-import { chartAxisProps, chartColors, chartGridProps } from '@/components/charts/chartTheme'
-import { getChartTooltipProps } from '@/components/charts/ChartTooltip'
+import { useChartTheme } from '@/components/charts/chartTheme'
+import { useChartTooltipProps } from '@/components/charts/ChartTooltip'
 
 const monthlyTrend = [
   { month: 'Jan', kwh: 320000, cost: 480, actual: 72000, target: 68000 },
@@ -49,6 +49,8 @@ const SAVING_OPPORTUNITY_IDR = 2_100_000
 const ABNORMAL_EVENTS_MTD = 23
 
 export default function ExecutiveDashboard() {
+  const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
+  const chartTooltipProps = useChartTooltipProps()
   const { filters, navigate } = useAppState()
 
   const areas = useMemo(() => {
@@ -131,7 +133,7 @@ export default function ExecutiveDashboard() {
                   <XAxis dataKey="month" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} tickFormatter={(v) => formatIdrJuta(Number(v))} />
                   <Tooltip
-                    {...getChartTooltipProps()}
+                    {...chartTooltipProps}
                     formatter={(value: number) => [jutaToIdr(value), 'Biaya']}
                   />
                   <Bar dataKey="cost" name="Biaya" fill={chartColors.primary} radius={[4, 4, 0, 0]} />
@@ -151,7 +153,7 @@ export default function ExecutiveDashboard() {
                   <CartesianGrid {...chartGridProps} />
                   <XAxis dataKey="month" {...chartAxisProps} />
                   <YAxis {...chartAxisProps} />
-                  <Tooltip {...getChartTooltipProps()} />
+                  <Tooltip {...chartTooltipProps} />
                   <Legend />
                   <Line
                     type="monotone"
@@ -190,7 +192,7 @@ export default function ExecutiveDashboard() {
                   <button
                     key={item.area}
                     type="button"
-                    className="w-full text-left space-y-2 rounded-lg p-2 -mx-2 hover:bg-white/5 transition-colors min-h-[44px]"
+                    className="w-full text-left space-y-2 rounded-lg p-2 -mx-2 hover:bg-accent transition-colors min-h-[44px]"
                     onClick={() =>
                       navigate('anomaly', { filters: { area: item.filterArea } })
                     }
@@ -201,7 +203,7 @@ export default function ExecutiveDashboard() {
                         {item.events} Events
                       </Badge>
                     </div>
-                    <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-input rounded-full overflow-hidden">
                       <div
                         className="h-full bg-primary transition-all"
                         style={{ width: `${(item.events / 12) * 100}%` }}

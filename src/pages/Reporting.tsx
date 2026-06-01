@@ -128,7 +128,7 @@ export default function Reporting() {
             <div className="space-y-2">
               <label className="text-sm font-medium leading-none">Report Type</label>
               <Select value={reportType} onValueChange={(v) => setReportType(v as ReportType)}>
-                <SelectTrigger className="bg-black/50 min-h-[44px]">
+                <SelectTrigger className="bg-input min-h-[44px]">
                   <SelectValue placeholder="Select report type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -149,7 +149,7 @@ export default function Reporting() {
                     type="button"
                     variant="outline"
                     className={cn(
-                      'w-full justify-start text-left font-normal bg-black/50 border-input hover:bg-black/70 hover:text-white min-h-[44px]',
+                      'w-full justify-start text-left font-normal bg-input border-input hover:bg-accent hover:text-foreground min-h-[44px]',
                       !dateRange?.from && 'text-muted-foreground'
                     )}
                   >
@@ -174,7 +174,7 @@ export default function Reporting() {
             <div className="space-y-2">
               <label className="text-sm font-medium leading-none">Area (Optional)</label>
               <Select value={area} onValueChange={setArea}>
-                <SelectTrigger className="bg-black/50 min-h-[44px]">
+                <SelectTrigger className="bg-input min-h-[44px]">
                   <SelectValue placeholder="Select area" />
                 </SelectTrigger>
                 <SelectContent>
@@ -190,7 +190,7 @@ export default function Reporting() {
               <Button className="w-full gap-2 min-h-[44px]" onClick={handleGenerateExcel}>
                 <FileSpreadsheet className="w-4 h-4" /> Generate Excel
               </Button>
-              <Button variant="outline" className="w-full gap-2 min-h-[44px] bg-black/30" onClick={handleGeneratePdf}>
+              <Button variant="outline" className="w-full gap-2 min-h-[44px] bg-muted" onClick={handleGeneratePdf}>
                 <FileText className="w-4 h-4" /> Generate PDF
               </Button>
             </div>
