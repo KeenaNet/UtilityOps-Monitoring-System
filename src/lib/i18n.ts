@@ -91,6 +91,24 @@ export type TranslationKey =
   | 'login.email'
   | 'login.password'
   | 'login.signIn'
+  | 'login.rememberMe'
+  | 'login.forgotPassword'
+  | 'login.footerAuth'
+  | 'login.footerVersion'
+  | 'login.valueProp'
+  | 'login.kpi.electricity'
+  | 'login.kpi.compressor'
+  | 'login.kpi.water'
+  | 'login.kpi.alerts'
+  | 'login.feat.monitoring'
+  | 'login.feat.manual'
+  | 'login.feat.anomaly'
+  | 'login.feat.reporting'
+  | 'login.heroDesc'
+  | 'login.feat.monitoringDesc'
+  | 'login.feat.manualDesc'
+  | 'login.feat.anomalyDesc'
+  | 'login.feat.reportingDesc'
   | 'common.save'
   | 'common.reset'
 
@@ -184,6 +202,24 @@ const id: Record<TranslationKey, string> = {
   'login.email': 'Email',
   'login.password': 'Kata Sandi',
   'login.signIn': 'Masuk',
+  'login.rememberMe': 'Ingat saya',
+  'login.forgotPassword': 'Lupa kata sandi?',
+  'login.footerAuth': 'Akses resmi saja • Sistem Monitoring Utilitas Internal',
+  'login.footerVersion': 'UtilityOps Monitoring System v1.0',
+  'login.valueProp': 'Platform Terintegrasi Untuk Pemantauan, Peringatan, Pelaporan & Analitik Utilitas',
+  'login.kpi.electricity': 'Listrik Hari Ini',
+  'login.kpi.compressor': 'Tekanan Kompresor',
+  'login.kpi.water': 'Penggunaan Air',
+  'login.kpi.alerts': 'Alarm Aktif',
+  'login.feat.monitoring': 'Pemantauan Realtime',
+  'login.feat.manual': 'Pengecekan Utilitas Manual',
+  'login.feat.anomaly': 'Peringatan Penggunaan Abnormal',
+  'login.feat.reporting': 'Pelaporan Otomatis',
+  'login.heroDesc': 'Pantau penggunaan listrik, kompresor, dan air dari datalogger yang ada dan pemeriksaan utilitas manual dalam satu sistem terpusat.',
+  'login.feat.monitoringDesc': 'Kumpulkan data listrik dan kompresor dari datalogger yang ada.',
+  'login.feat.manualDesc': 'Input pembacaan panel kWh dan meteran air langsung dari web.',
+  'login.feat.anomalyDesc': 'Deteksi konsumsi yang tidak biasa dan picu notifikasi otomatis.',
+  'login.feat.reportingDesc': 'Hasilkan laporan utilitas harian, mingguan, dan bulanan dengan otomatisasi n8n.',
   'common.save': 'Simpan',
   'common.reset': 'Reset',
 }
@@ -278,6 +314,24 @@ const en: Record<TranslationKey, string> = {
   'login.email': 'Email',
   'login.password': 'Password',
   'login.signIn': 'Sign In',
+  'login.rememberMe': 'Remember me',
+  'login.forgotPassword': 'Forgot password?',
+  'login.footerAuth': 'Authorized access only • Internal Utility Monitoring System',
+  'login.footerVersion': 'UtilityOps Monitoring System v1.0',
+  'login.valueProp': 'Integrated Utility Monitoring, Alerting, Reporting & Analytics Platform',
+  'login.kpi.electricity': 'Electricity Today',
+  'login.kpi.compressor': 'Compressor Pressure',
+  'login.kpi.water': 'Water Usage',
+  'login.kpi.alerts': 'Active Alerts',
+  'login.feat.monitoring': 'Realtime Monitoring',
+  'login.feat.manual': 'Manual Utility Check',
+  'login.feat.anomaly': 'Abnormal Usage Alert',
+  'login.feat.reporting': 'Automated Reporting',
+  'login.heroDesc': 'Monitor Electricity, Compressor, and Water usage from existing datalogger and manual utility checks in one centralized system.',
+  'login.feat.monitoringDesc': 'Collect Electricity and Compressor data from existing datalogger.',
+  'login.feat.manualDesc': 'Input kWh panel and water meter readings directly from web.',
+  'login.feat.anomalyDesc': 'Detect unusual consumption and trigger automated notification.',
+  'login.feat.reportingDesc': 'Generate daily, weekly, and monthly utility reports with n8n automation.',
   'common.save': 'Save',
   'common.reset': 'Reset',
 }
