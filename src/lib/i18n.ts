@@ -111,6 +111,10 @@ export type TranslationKey =
   | 'login.feat.reportingDesc'
   | 'common.save'
   | 'common.reset'
+  | 'login.demoPreview'
+  | 'login.signingIn'
+  | 'login.internalError'
+  | 'login.featureNotActive'
 
 const id: Record<TranslationKey, string> = {
   'app.name': 'UtilityOps',
@@ -222,6 +226,10 @@ const id: Record<TranslationKey, string> = {
   'login.feat.reportingDesc': 'Hasilkan laporan utilitas harian, mingguan, dan bulanan dengan otomatisasi n8n.',
   'common.save': 'Simpan',
   'common.reset': 'Reset',
+  'login.demoPreview': 'Pratinjau Demo',
+  'login.signingIn': 'Sedang Masuk...',
+  'login.internalError': 'Email atau kata sandi tidak valid.',
+  'login.featureNotActive': 'Fitur belum aktif',
 }
 
 const en: Record<TranslationKey, string> = {
@@ -334,6 +342,10 @@ const en: Record<TranslationKey, string> = {
   'login.feat.reportingDesc': 'Generate daily, weekly, and monthly utility reports with n8n automation.',
   'common.save': 'Save',
   'common.reset': 'Reset',
+  'login.demoPreview': 'Demo Preview',
+  'login.signingIn': 'Signing in...',
+  'login.internalError': 'Invalid email or password.',
+  'login.featureNotActive': 'Feature not active yet',
 }
 
 const dictionaries: Record<AppLanguage, Record<TranslationKey, string>> = { id, en }
