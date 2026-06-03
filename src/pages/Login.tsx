@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useSettings } from '@/context/SettingsContext'
-import type { AppLanguage, ThemeMode } from '@/lib/settingsStorage'
 import { Bolt, Gauge, Droplet, TriangleAlert, Globe, Moon, Sun } from 'lucide-react'
 import logoImg from '@/assets/utilityops_logo.png'
 
