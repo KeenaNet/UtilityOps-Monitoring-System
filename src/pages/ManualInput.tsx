@@ -30,6 +30,12 @@ const missingInputs = [
 
 export default function ManualInput() {
   const [date, setDate] = useState<Date>(new Date())
+  const [reading, setReading] = useState('')
+  const [readingError, setReadingError] = useState(false)
+
+  const validateReading = (value: string) => {
+    setReadingError(value.trim() === '')
+  }
 
   return (
     <div className="flex-1 overflow-auto bg-background/50 p-6 space-y-6">
@@ -125,8 +131,33 @@ export default function ManualInput() {
                 <Input type="text" id="meter-code" placeholder="e.g. ELEC-A-01" className="bg-input min-h-[44px]" />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="reading">Reading Value</Label>
-                <Input type="number" id="reading" placeholder="Enter current reading" className="text-xl h-12 bg-input min-h-[44px]" />
+                <Label htmlFor="reading">
+                  Reading Value <span className="text-destructive" aria-hidden>*</span>
+                </Label>
+                <Input
+                  type="number"
+                  id="reading"
+                  placeholder="Enter current reading"
+                  className={cn(
+                    "text-xl h-12 bg-input min-h-[44px]",
+                    readingError && "border-destructive focus-visible:ring-destructive"
+                  )}
+                  value={reading}
+                  onChange={(e) => {
+                    setReading(e.target.value)
+                    if (readingError) validateReading(e.target.value)
+                  }}
+                  onBlur={(e) => validateReading(e.target.value)}
+                  required
+                  aria-required="true"
+                  aria-invalid={readingError}
+                  aria-describedby={readingError ? "reading-error" : undefined}
+                />
+                {readingError ? (
+                  <p id="reading-error" className="text-xs text-destructive" role="alert">
+                    Reading value is required.
+                  </p>
+                ) : null}
               </div>
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="notes">Notes / Observations</Label>
@@ -135,7 +166,7 @@ export default function ManualInput() {
             </div>
             
             <div className="flex justify-end pt-4 border-t border-border">
-              <Button type="submit" className="gap-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] min-h-[44px] min-w-[44px]">
+              <Button type="submit" className="gap-2 shadow-[0_0_15px_hsl(var(--primary)/0.3)] min-h-[44px] min-w-[44px]">
                 <Save className="w-4 h-4" />
                 Submit Reading
               </Button>
@@ -182,9 +213,9 @@ export default function ManualInput() {
       </TabsContent>
 
       <TabsContent value="missing" className="mt-6">
-        <Card className="glass-card border-red-500/30">
+        <Card className="glass-card border-destructive/30">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-red-400"><AlertCircle className="w-5 h-5" /> Missing Inputs</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-destructive"><AlertCircle className="w-5 h-5" /> Missing Inputs</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
@@ -200,7 +231,7 @@ export default function ManualInput() {
               <TableBody>
                 {missingInputs.map((missing) => (
                   <TableRow key={missing.id}>
-                    <TableCell className="text-red-400">{missing.expectedTime}</TableCell>
+                    <TableCell className="text-destructive">{missing.expectedTime}</TableCell>
                     <TableCell>{missing.shift}</TableCell>
                     <TableCell className="font-medium">{missing.meter}</TableCell>
                     <TableCell>{missing.area}</TableCell>

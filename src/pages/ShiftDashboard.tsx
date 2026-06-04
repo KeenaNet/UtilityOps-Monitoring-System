@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { KpiCard } from '@/components/common/KpiCard'
+import { PageDescription } from '@/components/common/PageDescription'
 import { PageShell } from '@/components/common/PageShell'
 import { useAppState } from '@/context/AppState'
 import { shiftAnomalies, shiftComparison, shiftTrend } from '@/data/mockShift'
@@ -34,9 +35,7 @@ export default function ShiftDashboard() {
   return (
     <PageShell loadingDeps={[]}>
       <div className="flex-1 overflow-auto p-4 lg:p-6 space-y-6">
-        <p className="text-sm text-muted-foreground -mt-2">
-          Perbandingan konsumsi dan anomali per shift — hari ini
-        </p>
+        <PageDescription messageKey="page.shift.description" />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <KpiCard
@@ -46,7 +45,7 @@ export default function ShiftDashboard() {
               'kWh'
             )}
             icon={Zap}
-            iconClassName="text-blue-400"
+            iconClassName="text-primary"
             onClick={() => navigate('analytics', { filters: { period: 'today' } })}
           />
           <KpiCard
@@ -56,7 +55,7 @@ export default function ShiftDashboard() {
               'kWh'
             )}
             icon={Gauge}
-            iconClassName="text-violet-400"
+            iconClassName="text-chart-violet"
           />
           <KpiCard
             title="Water Usage"
@@ -65,14 +64,14 @@ export default function ShiftDashboard() {
               'm³'
             )}
             icon={Droplets}
-            iconClassName="text-cyan-400"
+            iconClassName="text-chart-cyan"
           />
           <KpiCard
             title="Abnormal Events (Shift 2)"
             value={formatNumber(anomaliesShift2)}
             subtitle="Highest this week"
             icon={AlertTriangle}
-            iconClassName="text-amber-400"
+            iconClassName="text-chart-amber"
             onClick={() => navigate('anomaly')}
             ariaLabel="Lihat anomali shift"
           />

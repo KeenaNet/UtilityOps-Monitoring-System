@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { PageIntro } from '@/components/common/PageIntro'
 import { PageShell } from '@/components/common/PageShell'
 import { EmptyState } from '@/components/common/EmptyState'
 import { ResponsiveTable } from '@/components/common/ResponsiveTable'
@@ -115,26 +116,32 @@ export default function Analytics() {
   return (
     <PageShell loadingDeps={[dimension, filters.utilityType, filters.period]}>
       <div className="flex-1 overflow-auto p-4 lg:p-6 space-y-6">
-        <div className="flex flex-wrap gap-2 justify-end">
-          <Button
-            variant="outline"
-            className="gap-2 min-h-[44px] bg-muted"
-            onClick={handleExportExcel}
-          >
-            <FileSpreadsheet className="w-4 h-4" /> Excel
-          </Button>
-          <Button
-            variant="outline"
-            className="gap-2 min-h-[44px] bg-muted"
-            onClick={handleExportPdf}
-          >
-            <Download className="w-4 h-4" /> PDF
-          </Button>
-        </div>
-
-        <p className="text-sm text-muted-foreground -mt-4">
-          FR-008 — analyze usage by period, area, and meter · Unit: {unit}
-        </p>
+        <PageIntro
+          messageKey="page.analytics.description"
+          values={{ unit }}
+          actions={
+            <>
+              <Button
+                variant="outline"
+                className="gap-2 min-h-[44px] bg-muted"
+                onClick={handleExportExcel}
+                aria-label="Export to Excel"
+              >
+                <FileSpreadsheet className="w-4 h-4" aria-hidden />
+                Excel
+              </Button>
+              <Button
+                variant="outline"
+                className="gap-2 min-h-[44px] bg-muted"
+                onClick={handleExportPdf}
+                aria-label="Export to PDF"
+              >
+                <Download className="w-4 h-4" aria-hidden />
+                PDF
+              </Button>
+            </>
+          }
+        />
 
         <Tabs value={dimension} onValueChange={(v) => setDimension(v as AnalyticsDimension)}>
           <TabsList className="flex flex-wrap h-auto gap-1 bg-muted p-1">
@@ -267,7 +274,7 @@ export default function Analytics() {
                                   <TableCell>{formatNumber(row.actual)}</TableCell>
                                   <TableCell>{formatNumber(row.baseline)}</TableCell>
                                   <TableCell>{formatNumber(row.target)}</TableCell>
-                                  <TableCell className={delta > 0 ? 'text-red-400' : 'text-emerald-400'}>
+                                  <TableCell className={delta > 0 ? 'text-destructive' : 'text-chart-emerald'}>
                                     {delta > 0 ? '+' : ''}
                                     {formatNumber(Math.round(delta))}%
                                   </TableCell>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PageDescription } from '@/components/common/PageDescription'
 import { PageShell } from '@/components/common/PageShell'
 import { ResponsiveTable } from '@/components/common/ResponsiveTable'
 import type { DateRange } from 'react-day-picker'
@@ -114,7 +115,7 @@ export default function Reporting() {
   return (
     <PageShell loadingDeps={[reportType, area]}>
     <div className="flex-1 overflow-auto p-4 lg:p-6 space-y-6">
-      <p className="text-sm text-muted-foreground -mt-2">FR-011 — generate and export utility reports.</p>
+      <PageDescription messageKey="page.reporting.description" />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="glass-card md:col-span-1 h-fit">
@@ -233,7 +234,7 @@ export default function Reporting() {
                           variant="ghost"
                           size="icon"
                           disabled={report.status !== 'Generated'}
-                          className="h-9 w-9 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-400/10 min-h-[44px] min-w-[44px]"
+                          className="h-9 w-9 text-chart-emerald hover:text-chart-emerald/80 hover:bg-chart-emerald/10 min-h-[44px] min-w-[44px]"
                           title="Download Excel"
                           onClick={() => handleDownload(report, 'excel')}
                         >
@@ -243,7 +244,7 @@ export default function Reporting() {
                           variant="ghost"
                           size="icon"
                           disabled={report.status !== 'Generated'}
-                          className="h-9 w-9 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 min-h-[44px] min-w-[44px]"
+                          className="h-9 w-9 text-primary hover:text-primary/80 hover:bg-primary/10 min-h-[44px] min-w-[44px]"
                           title="Download PDF"
                           onClick={() => handleDownload(report, 'pdf')}
                         >

@@ -2,6 +2,7 @@ import { useAppState } from '@/context/AppState'
 import { useSettings } from '@/context/SettingsContext'
 import { pageTitleKeyByPage } from '@/lib/i18n'
 import { FilterBar, type FilterField } from '@/components/filters/FilterBar'
+import { ThemeLanguageToggles } from '@/components/layout/ThemeLanguageToggles'
 import { Button } from '@/components/ui/button'
 import { Menu, PanelLeft, PanelLeftClose } from 'lucide-react'
 
@@ -20,9 +21,9 @@ export function TopBar() {
   const filterFields = pageFilterConfig[activePage]
 
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur-md px-4 py-3 lg:px-6">
+    <header className="sticky top-0 z-(--z-sticky) border-b border-border bg-background/80 backdrop-blur-md px-4 py-3 lg:px-6">
       <div className="flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <Button
               type="button"
@@ -48,7 +49,7 @@ export function TopBar() {
               <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-0.5">
                 <span className="flex items-center">
                   <span
-                    className="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"
+                    className="w-2 h-2 rounded-full bg-status-live mr-1.5 animate-pulse"
                     aria-hidden
                   />
                   {t('topbar.systemOnline')}
@@ -58,6 +59,7 @@ export function TopBar() {
               </div>
             </div>
           </div>
+          <ThemeLanguageToggles touchFriendly />
         </div>
         {filterFields && filterFields.length > 0 ? (
           <FilterBar fields={filterFields} className="lg:justify-end" />

@@ -33,6 +33,18 @@ export function getChartColors() {
 /** Static fallback for modules that import at load time */
 export const chartColors = getChartColors()
 
+/** Donut/pie severity slices — each level uses a distinct chart token for contrast */
+export function getSeverityChartColors(
+  colors: ReturnType<typeof getChartColors>
+): Record<string, string> {
+  return {
+    Low: colors.axis,
+    Medium: colors.amber,
+    High: colors.violet,
+    Critical: colors.rose,
+  }
+}
+
 export function getChartTooltipStyle() {
   const c = getChartColors()
   return {

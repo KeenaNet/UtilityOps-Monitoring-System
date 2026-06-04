@@ -58,7 +58,7 @@ export default function AlarmCenter() {
             title="Active Alarms"
             value={formatNumber(activeCount)}
             icon={AlertTriangle}
-            iconClassName="text-red-400"
+            iconClassName="text-destructive"
           />
           <KpiCard title="Total (filtered)" value={formatNumber(filtered.length)} />
           <KpiCard
@@ -67,7 +67,7 @@ export default function AlarmCenter() {
               filtered.filter((a) => a.severity === 'Critical' || a.severity === 'High').length
             )}
             icon={AlertTriangle}
-            iconClassName="text-amber-400"
+            iconClassName="text-chart-amber"
           />
         </div>
 
@@ -162,7 +162,7 @@ export default function AlarmCenter() {
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
                                       <Label className="text-right text-muted-foreground">Issue</Label>
-                                      <div className="col-span-3 font-medium text-red-400">
+                                      <div className="col-span-3 font-medium text-destructive">
                                         {alarm.issue}
                                       </div>
                                     </div>
@@ -227,7 +227,8 @@ export default function AlarmCenter() {
                                     </Button>
                                     <Button
                                       type="submit"
-                                      className="bg-red-500 hover:bg-red-600 text-white min-h-[44px]"
+                                      variant="destructive"
+                                      className="min-h-[44px]"
                                     >
                                       Close Alarm
                                     </Button>
@@ -239,7 +240,7 @@ export default function AlarmCenter() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="gap-1 bg-muted hover:bg-muted text-blue-400 border-blue-400/30 min-h-[44px] min-w-[44px]"
+                                  className="gap-1 bg-muted hover:bg-muted text-primary border-primary/30 min-h-[44px] min-w-[44px]"
                                 >
                                   <Check className="w-4 h-4" />
                                   <span className="hidden sm:inline">Ack</span>
@@ -249,7 +250,7 @@ export default function AlarmCenter() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="gap-1 bg-muted hover:bg-muted text-red-400 border-red-400/30 min-h-[44px] min-w-[44px]"
+                                  className="gap-1 bg-muted hover:bg-muted text-destructive border-destructive/30 min-h-[44px] min-w-[44px]"
                                 >
                                   <X className="w-4 h-4" />
                                   <span className="hidden sm:inline">Close</span>

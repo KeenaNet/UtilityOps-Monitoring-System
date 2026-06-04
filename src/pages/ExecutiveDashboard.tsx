@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { KpiCard } from '@/components/common/KpiCard'
+import { PageDescription } from '@/components/common/PageDescription'
 import { PageShell } from '@/components/common/PageShell'
 import { useAppState } from '@/context/AppState'
 import { formatIdr, formatIdrJuta, formatPercent, formatWithUnit, jutaToIdr } from '@/lib/format'
@@ -61,63 +62,61 @@ export default function ExecutiveDashboard() {
   return (
     <PageShell loadingDeps={[filters.period, filters.area]}>
       <div className="flex-1 overflow-auto p-4 lg:p-6 space-y-6">
-        <p className="text-sm text-muted-foreground -mt-2">
-          Ringkasan konsumsi utility dan biaya (Rupiah) · Period: June 2026 (MTD)
-        </p>
+        <PageDescription messageKey="page.executive.description" />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           <KpiCard
             title="Total Biaya Listrik"
             value={formatIdr(TOTAL_ELECTRICITY_COST_IDR)}
             subtitle={
-              <span className="flex items-center text-emerald-400">
+              <span className="flex items-center text-chart-emerald">
                 <ArrowDownRight className="w-3 h-3 mr-1" aria-hidden />
                 {formatPercent(4.2, 1)} di bawah anggaran
               </span>
             }
             icon={Zap}
-            iconClassName="text-blue-400"
+            iconClassName="text-primary"
           />
           <KpiCard
             title="Compressor Consumption"
             value={formatWithUnit(48500, 'kWh')}
             subtitle={
-              <span className="flex items-center text-emerald-400">
+              <span className="flex items-center text-chart-emerald">
                 <ArrowDownRight className="w-3 h-3 mr-1" aria-hidden />
                 {formatPercent(1.8, 1)} vs target
               </span>
             }
             icon={Gauge}
-            iconClassName="text-violet-400"
+            iconClassName="text-chart-violet"
           />
           <KpiCard
             title="Water Consumption"
             value={formatWithUnit(14200, 'm³')}
             subtitle={
-              <span className="flex items-center text-red-400">
+              <span className="flex items-center text-destructive">
                 <ArrowUpRight className="w-3 h-3 mr-1" aria-hidden />
                 {formatPercent(2.1, 1)} di atas anggaran
               </span>
             }
             icon={Droplets}
-            iconClassName="text-cyan-400"
+            iconClassName="text-chart-cyan"
           />
           <KpiCard
             title="Abnormal Events (MTD)"
             value={ABNORMAL_EVENTS_MTD}
             subtitle="Across all utilities"
             icon={AlertTriangle}
-            iconClassName="text-amber-400"
+            iconClassName="text-chart-amber"
             onClick={() => navigate('anomaly', { filters: { status: 'all' } })}
             ariaLabel="Lihat ringkasan anomali"
           />
           <KpiCard
             title="Saving Opportunity"
-            value={<span className="text-emerald-400">~{formatIdr(SAVING_OPPORTUNITY_IDR)}</span>}
+            value={<span className="text-chart-emerald">~{formatIdr(SAVING_OPPORTUNITY_IDR)}</span>}
             subtitle="From idle compressors"
             icon={TrendingDown}
-            iconClassName="text-emerald-400"
-            className="border-emerald-500/30"
+            iconClassName="text-chart-emerald"
+            className="border-chart-emerald/30"
           />
         </div>
 

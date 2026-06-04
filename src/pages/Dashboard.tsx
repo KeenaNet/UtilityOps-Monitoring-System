@@ -78,39 +78,39 @@ export default function Dashboard() {
             value={formatWithUnit(12450, 'kWh')}
             subtitle={`+${formatPercent(12)} dari kemarin`}
             icon={Zap}
-            iconClassName="text-blue-400"
-            className="hover:border-blue-400/50"
+            iconClassName="text-primary"
+            className="hover:border-primary/50"
           />
           <KpiCard
             title="Compressor kWh Today"
             value={formatWithUnit(890, 'kWh')}
             subtitle="Normal operating range"
             icon={Gauge}
-            iconClassName="text-violet-400"
-            className="hover:border-violet-500/50"
+            iconClassName="text-chart-violet"
+            className="hover:border-chart-violet/50"
           />
           <KpiCard
             title="Total Water Usage"
             value={formatWithUnit(450, 'm³')}
             subtitle={`+${formatPercent(2)} dari kemarin`}
             icon={Droplets}
-            iconClassName="text-cyan-400"
-            className="hover:border-cyan-500/50"
+            iconClassName="text-chart-cyan"
+            className="hover:border-chart-cyan/50"
           />
           <KpiCard
             title="Avg Compressor Pressure"
             value={formatWithUnit(6.8, 'Bar', 1)}
             subtitle="Within target band"
             icon={Gauge}
-            iconClassName="text-emerald-400"
-            className="hover:border-emerald-500/50"
+            iconClassName="text-chart-emerald"
+            className="hover:border-chart-emerald/50"
           />
           <KpiCard
             title="Active Alarms"
-            value={<span className="text-red-400">{formatNumber(activeAlarms)}</span>}
+            value={<span className="text-destructive">{formatNumber(activeAlarms)}</span>}
             subtitle={`${formatNumber(highPriority)} High Priority`}
             icon={AlertTriangle}
-            iconClassName="text-red-400"
+            iconClassName="text-destructive"
             className="hover:border-destructive/50 md:col-span-2 lg:col-span-1"
             onClick={() =>
               navigate('alarm-center', { filters: { status: 'active', severity: 'all' } })
@@ -125,7 +125,7 @@ export default function Dashboard() {
             value={formatPercent(manualInputCompletion.percent, 0)}
             subtitle={`${formatNumber(manualInputCompletion.completed)}/${formatNumber(manualInputCompletion.total)} — ${formatNumber(manualInputCompletion.missing)} missing`}
             icon={ClipboardList}
-            iconClassName="text-amber-400"
+            iconClassName="text-chart-amber"
             onClick={() => navigate('manual-input')}
             ariaLabel="Buka manual input"
           />
@@ -134,7 +134,7 @@ export default function Dashboard() {
             value={systemStatus.collectorOnline ? 'Online' : 'Offline'}
             subtitle={`Datalogger: ${systemStatus.dataloggerLastUpdate}`}
             icon={Server}
-            iconClassName={systemStatus.collectorOnline ? 'text-emerald-400' : 'text-red-400'}
+            iconClassName={systemStatus.collectorOnline ? 'text-chart-emerald' : 'text-destructive'}
           />
           <Card className="glass-card md:col-span-2">
             <CardHeader className="pb-2">
@@ -168,16 +168,10 @@ export default function Dashboard() {
                   <Tooltip
                     {...chartTooltipProps}
                     formatter={(value: number, name: string) => [
-                      name === 'pressure'
+                      name === 'Tekanan (Bar)' || name === 'pressure'
                         ? formatWithUnit(value, 'Bar', 1)
                         : formatNumber(value),
-                      name === 'kwh'
-                        ? 'Listrik (kWh)'
-                        : name === 'water'
-                          ? 'Air (m³)'
-                          : name === 'compressorKwh'
-                            ? 'Compressor (kWh)'
-                            : 'Tekanan',
+                      name,
                     ]}
                   />
                   <Legend />
@@ -187,7 +181,7 @@ export default function Dashboard() {
                     stroke={chartColors.primary}
                     strokeWidth={2}
                     dot={false}
-                    name="Electricity (kWh)"
+                    name="Listrik (kWh)"
                   />
                   <Line
                     type="monotone"
@@ -195,7 +189,7 @@ export default function Dashboard() {
                     stroke={chartColors.cyan}
                     strokeWidth={2}
                     dot={false}
-                    name="Water (m³)"
+                    name="Air (m³)"
                   />
                   <Line
                     type="monotone"

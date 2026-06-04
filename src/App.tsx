@@ -14,6 +14,7 @@ import ExecutiveDashboard from '@/pages/ExecutiveDashboard'
 import ShiftDashboard from '@/pages/ShiftDashboard'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { TopBar } from '@/components/layout/TopBar'
+import { OfflineBanner } from '@/components/common/OfflineBanner'
 
 function AppRoutes() {
   const { activePage } = useAppState()
@@ -51,6 +52,7 @@ function AuthenticatedApp({ onLogout }: { onLogout: () => void }) {
         <Sidebar onLogout={onLogout} />
         <div className="flex-1 flex flex-col min-w-0 relative">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+          <OfflineBanner />
           <TopBar />
           <AppRoutes />
         </div>

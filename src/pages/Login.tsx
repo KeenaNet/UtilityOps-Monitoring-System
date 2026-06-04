@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ThemeLanguageToggles } from '@/components/layout/ThemeLanguageToggles'
 import { useSettings } from '@/context/SettingsContext'
-import { Bolt, Gauge, Droplet, TriangleAlert, Globe, Moon, Sun } from 'lucide-react'
+import { Bolt, Gauge, Droplet, TriangleAlert } from 'lucide-react'
 import logoImg from '@/assets/utilityops_logo.png'
 
 export default function Login({ onLogin }: { onLogin: () => void }) {
@@ -12,7 +13,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { t, language, setLanguage, theme, setTheme } = useSettings()
+  const { t } = useSettings()
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,29 +30,12 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
     }, 1500)
   }
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'id' : 'en')
-  }
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
-
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-background p-6 sm:p-8 lg:p-12 relative overflow-hidden text-foreground">
       {/* Background decorations (simplified) */}
       <div className="absolute inset-0 opacity-20 pointer-events-none bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)]" />
 
-      {/* Top right toggles */}
-      <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-muted-foreground hover:text-foreground h-8 w-8" aria-label="Toggle theme">
-          {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </Button>
-        <Button variant="ghost" size="sm" onClick={toggleLanguage} className="gap-1.5 text-muted-foreground hover:text-foreground h-8 text-xs font-medium" aria-label="Toggle language">
-          <Globe className="h-4 w-4" />
-          {language === 'en' ? 'ID' : 'EN'}
-        </Button>
-      </div>
+      <ThemeLanguageToggles className="absolute top-4 right-4 z-20" />
 
       <div className="w-full max-w-md lg:max-w-lg relative z-10 flex flex-col gap-8 mt-8 sm:mt-0">
         
@@ -141,21 +125,21 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 opacity-70 hover:opacity-100 transition-opacity">
             <div className="surface-muted rounded-xl p-3 flex flex-col gap-1 shadow-sm">
               <div className="flex items-center gap-1.5 text-muted-foreground">
-                <Bolt size={14} className="text-amber-500" />
+                <Bolt size={14} className="text-chart-amber" />
                 <span className="text-[11px] font-medium truncate">{t('login.kpi.electricity')}</span>
               </div>
               <span className="text-sm font-bold text-foreground">14,250 kWh</span>
             </div>
             <div className="surface-muted rounded-xl p-3 flex flex-col gap-1 shadow-sm">
               <div className="flex items-center gap-1.5 text-muted-foreground">
-                <Gauge size={14} className="text-sky-500" />
+                <Gauge size={14} className="text-primary" />
                 <span className="text-[11px] font-medium truncate">{t('login.kpi.compressor')}</span>
               </div>
               <span className="text-sm font-bold text-foreground">7.5 bar</span>
             </div>
             <div className="surface-muted rounded-xl p-3 flex flex-col gap-1 shadow-sm">
               <div className="flex items-center gap-1.5 text-muted-foreground">
-                <Droplet size={14} className="text-blue-500" />
+                <Droplet size={14} className="text-chart-cyan" />
                 <span className="text-[11px] font-medium truncate">{t('login.kpi.water')}</span>
               </div>
               <span className="text-sm font-bold text-foreground">1,420 m³</span>

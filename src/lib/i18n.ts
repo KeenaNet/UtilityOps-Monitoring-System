@@ -24,10 +24,19 @@ export type TranslationKey =
   | 'page.reporting'
   | 'page.masterData'
   | 'page.settings'
+  | 'page.executive.description'
+  | 'page.shift.description'
+  | 'page.analytics.description'
+  | 'page.anomaly.description'
+  | 'page.reporting.description'
   | 'topbar.systemOnline'
   | 'topbar.lastUpdate'
+  | 'offline.title'
+  | 'offline.message'
   | 'topbar.openMenu'
   | 'topbar.closeMenu'
+  | 'preferences.toggleTheme'
+  | 'preferences.toggleLanguage'
   | 'sidebar.closeMenu'
   | 'sidebar.closeOverlay'
   | 'filter.ariaLabel'
@@ -139,10 +148,25 @@ const id: Record<TranslationKey, string> = {
   'page.reporting': 'Pelaporan',
   'page.masterData': 'Master Data',
   'page.settings': 'Pengaturan',
+  'page.executive.description':
+    'Ringkasan konsumsi dan biaya utilitas untuk periode yang dipilih.',
+  'page.shift.description':
+    'Bandingkan konsumsi dan anomali antar shift untuk hari ini.',
+  'page.analytics.description':
+    'Analisis tren konsumsi berdasarkan periode, area, atau meter. Satuan: {unit}.',
+  'page.anomaly.description':
+    'Pantau pemakaian abnormal, tingkat severity, dan status tindak lanjut.',
+  'page.reporting.description':
+    'Buat laporan utilitas dan unduh dalam format Excel atau PDF.',
   'topbar.systemOnline': 'Sistem Online',
   'topbar.lastUpdate': 'Pembaruan terakhir: Baru saja',
+  'offline.title': 'Koneksi terputus',
+  'offline.message':
+    'Anda sedang offline. Data mungkin tidak diperbarui hingga koneksi pulih.',
   'topbar.openMenu': 'Buka menu navigasi',
   'topbar.closeMenu': 'Tutup menu navigasi',
+  'preferences.toggleTheme': 'Ganti tema',
+  'preferences.toggleLanguage': 'Ganti bahasa',
   'sidebar.closeMenu': 'Tutup menu',
   'sidebar.closeOverlay': 'Tutup overlay menu',
   'filter.ariaLabel': 'Filter data dashboard',
@@ -255,10 +279,25 @@ const en: Record<TranslationKey, string> = {
   'page.reporting': 'Reporting',
   'page.masterData': 'Master Data',
   'page.settings': 'Settings',
+  'page.executive.description':
+    'Summary of utility consumption and cost for the selected period.',
+  'page.shift.description':
+    'Compare consumption and anomalies across shifts for today.',
+  'page.analytics.description':
+    'Review consumption trends by period, area, or meter. Unit: {unit}.',
+  'page.anomaly.description':
+    'Track abnormal usage, severity levels, and follow-up status.',
+  'page.reporting.description':
+    'Create utility reports and download them as Excel or PDF.',
   'topbar.systemOnline': 'System Online',
   'topbar.lastUpdate': 'Last update: Just now',
+  'offline.title': 'Connection lost',
+  'offline.message':
+    'You are offline. Data may not update until the connection is restored.',
   'topbar.openMenu': 'Open navigation menu',
   'topbar.closeMenu': 'Close navigation menu',
+  'preferences.toggleTheme': 'Toggle theme',
+  'preferences.toggleLanguage': 'Toggle language',
   'sidebar.closeMenu': 'Close menu',
   'sidebar.closeOverlay': 'Close menu overlay',
   'filter.ariaLabel': 'Dashboard data filters',
@@ -352,6 +391,25 @@ const dictionaries: Record<AppLanguage, Record<TranslationKey, string>> = { id, 
 
 export function translate(key: TranslationKey, language: AppLanguage): string {
   return dictionaries[language][key] ?? key
+}
+
+export function formatTranslation(
+  template: string,
+  values?: Record<string, string | number>
+): string {
+  if (!values) return template
+  return Object.entries(values).reduce(
+    (text, [key, value]) => text.replace(new RegExp(`\\{${key}\\}`, 'g'), String(value)),
+    template
+  )
+}
+
+export const pageDescriptionKeyByPage: Partial<Record<AppPage, TranslationKey>> = {
+  executive: 'page.executive.description',
+  shift: 'page.shift.description',
+  analytics: 'page.analytics.description',
+  anomaly: 'page.anomaly.description',
+  reporting: 'page.reporting.description',
 }
 
 export const navKeyByPage: Record<AppPage, TranslationKey> = {

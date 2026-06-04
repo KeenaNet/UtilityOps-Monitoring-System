@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { KpiCard } from '@/components/common/KpiCard'
+import { PageDescription } from '@/components/common/PageDescription'
 import { PageShell } from '@/components/common/PageShell'
 import { EmptyState } from '@/components/common/EmptyState'
 import { ResponsiveTable } from '@/components/common/ResponsiveTable'
@@ -54,17 +55,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { useChartTheme } from '@/components/charts/chartTheme'
+import { getSeverityChartColors, useChartTheme } from '@/components/charts/chartTheme'
 import { ChartPieTooltipContent, useChartTooltipProps } from '@/components/charts/ChartTooltip'
-
-function severityColors(chartColors: ReturnType<typeof useChartTheme>['colors']): Record<string, string> {
-  return {
-    Low: chartColors.axis,
-    Medium: chartColors.amber,
-    High: '#f97316',
-    Critical: chartColors.rose,
-  }
-}
 
 function severityVariant(severity: string) {
   if (severity === 'Critical' || severity === 'High') return 'destructive' as const
@@ -86,7 +78,7 @@ export default function AnomalyDashboard() {
   const { filters, navigate } = useAppState()
   const { colors: chartColors, gridProps: chartGridProps, axisProps: chartAxisProps } = useChartTheme()
   const chartTooltipProps = useChartTooltipProps()
-  const SEVERITY_COLORS = useMemo(() => severityColors(chartColors), [chartColors])
+  const SEVERITY_COLORS = useMemo(() => getSeverityChartColors(chartColors), [chartColors])
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const filtered = useMemo(() => {
@@ -150,32 +142,30 @@ export default function AnomalyDashboard() {
   return (
     <PageShell loadingDeps={[filters]}>
       <div className="flex-1 overflow-auto p-4 lg:p-6 space-y-6">
-        <p className="text-sm text-muted-foreground -mt-2">
-          Monitor abnormal usage, severity, and follow-up status
-        </p>
+        <PageDescription messageKey="page.anomaly.description" />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
           <KpiCard
             title="Active Anomalies"
             value={formatNumber(activeCount)}
             subtitle={
-              <span className="flex items-center text-amber-400">
+              <span className="flex items-center text-chart-amber">
                 <ArrowUpRight className="w-3 h-3 mr-1" aria-hidden />
                 {formatNumber(criticalHigh)} critical/high
               </span>
             }
             icon={AlertTriangle}
-            iconClassName="text-amber-400"
+            iconClassName="text-chart-amber"
             onClick={() =>
               navigate('anomaly', { filters: { status: 'open' }, mergeFilters: false })
             }
           />
           <KpiCard
             title="Critical / High"
-            value={<span className="text-red-400">{formatNumber(criticalHigh)}</span>}
+            value={<span className="text-destructive">{formatNumber(criticalHigh)}</span>}
             subtitle="Requires immediate attention"
             icon={AlertTriangle}
-            iconClassName="text-red-400"
+            iconClassName="text-destructive"
             onClick={() =>
               navigate('anomaly', {
                 filters: { severity: 'high', status: 'all' },
@@ -187,13 +177,13 @@ export default function AnomalyDashboard() {
             title="Avg Duration (MTTR)"
             value={`${formatDecimal(avgDuration, 1)} h`}
             subtitle={
-              <span className="flex items-center text-emerald-400">
+              <span className="flex items-center text-chart-emerald">
                 <ArrowDownRight className="w-3 h-3 mr-1" aria-hidden />
                 Target &lt; 8 h
               </span>
             }
             icon={Clock}
-            iconClassName="text-blue-400"
+            iconClassName="text-primary"
           />
           <KpiCard
             title="Resolution Rate"
@@ -202,11 +192,11 @@ export default function AnomalyDashboard() {
           />
           <KpiCard
             title="Unassigned PIC"
-            value={<span className="text-amber-400">{formatNumber(unassigned)}</span>}
+            value={<span className="text-chart-amber">{formatNumber(unassigned)}</span>}
             subtitle="Open without PIC"
             icon={UserX}
-            iconClassName="text-amber-400"
-            className="border-amber-500/30"
+            iconClassName="text-chart-amber"
+            className="border-chart-amber/30"
             onClick={() => navigate('anomaly', { filters: { pic: 'unassigned', status: 'open' } })}
           />
         </div>
@@ -356,7 +346,7 @@ export default function AnomalyDashboard() {
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              <span className={delta > 0 ? 'text-red-400' : 'text-emerald-400'}>
+                              <span className={delta > 0 ? 'text-destructive' : 'text-chart-emerald'}>
                                 {delta > 0 ? '+' : ''}
                                 {formatPercent(delta, 1)}
                               </span>
@@ -425,7 +415,7 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right text-muted-foreground">Rule</Label>
-            <div className="col-span-3 font-medium text-red-400">{anomaly.anomalyType}</div>
+            <div className="col-span-3 font-medium text-destructive">{anomaly.anomalyType}</div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right text-muted-foreground">Actual / Baseline</Label>
@@ -498,7 +488,7 @@ function AnomalyDetailDialog({ anomaly }: { anomaly: AnomalyRecord }) {
           <Button type="button" variant="outline" className="bg-muted hover:bg-muted min-h-[44px]">
             Save Draft
           </Button>
-          <Button type="button" className="bg-red-500 hover:bg-red-600 text-white min-h-[44px]">
+          <Button type="button" variant="destructive" className="min-h-[44px]">
             Close Anomaly
           </Button>
         </DialogFooter>

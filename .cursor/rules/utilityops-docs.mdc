@@ -1,0 +1,16 @@
+---
+description: UtilityOps — read docs before structural or UI work
+alwaysApply: true
+---
+
+# UtilityOps documentation
+
+Before changing navigation, state, data flow, or visual design:
+
+1. **`AGENTS.md`** (repo root) — stack, conventions, do-not-do list
+2. **`docs/architecture.md`** — current SPA vs target platform
+3. **`docs/design-system.md`** — tokens, themes, charts (required for UI)
+
+Product requirements live in **`docs/prd_utilityops_monitoring_system.md`**; do not paste FR IDs into user-visible copy.
+
+After token or theme changes, keep **`docs/design-system.md`** aligned with `src/index.css` and chart code.

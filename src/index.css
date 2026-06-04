@@ -28,6 +28,20 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
+  --color-chart-primary: hsl(var(--chart-primary));
+  --color-chart-cyan: hsl(var(--chart-cyan));
+  --color-chart-emerald: hsl(var(--chart-emerald));
+  --color-chart-rose: hsl(var(--chart-rose));
+  --color-chart-amber: hsl(var(--chart-amber));
+  --color-chart-violet: hsl(var(--chart-violet));
+  --color-chart-teal: hsl(var(--chart-teal));
+
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-status-live: hsl(var(--status-live));
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -86,6 +100,15 @@
     --chart-amber: 45 93% 47%;
     --chart-violet: 258 90% 66%;
     --chart-teal: 172 66% 50%;
+
+    --warning: 45 93% 47%;
+    --warning-foreground: 210 40% 98%;
+    --success: 160 84% 39%;
+    --success-foreground: 210 40% 98%;
+    --status-live: 160 84% 39%;
+
+    /* Elevation token (theme-aware) */
+    --shadow-glass: 0 25px 50px -12px rgb(0 0 0 / 0.5);
   }
 
   [data-theme='light'] {
@@ -136,6 +159,24 @@
     --chart-amber: 38 92% 40%;
     --chart-violet: 258 90% 55%;
     --chart-teal: 172 66% 38%;
+
+    --warning: 38 92% 40%;
+    --warning-foreground: 210 40% 98%;
+    --success: 160 84% 30%;
+    --success-foreground: 210 40% 98%;
+    --status-live: 160 84% 30%;
+
+    --shadow-glass:
+      0 4px 6px -1px hsl(222.2 47.4% 11.2% / 0.08),
+      0 2px 4px -2px hsl(222.2 47.4% 11.2% / 0.06);
+  }
+
+  /* Z-index scale (theme-independent) */
+  :root {
+    --z-sticky: 20;
+    --z-overlay: 40;
+    --z-modal: 50;
+    --z-toast: 70;
   }
 }
 
@@ -159,13 +200,7 @@
   background: hsl(var(--card) / 0.85);
   backdrop-filter: blur(16px);
   border: 1px solid hsl(var(--surface-border));
-  box-shadow:
-    0 4px 6px -1px hsl(222.2 47.4% 11.2% / 0.08),
-    0 2px 4px -2px hsl(222.2 47.4% 11.2% / 0.06);
-}
-
-[data-theme='dark'] .glass-card {
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+  box-shadow: var(--shadow-glass);
 }
 
 .surface-muted {
