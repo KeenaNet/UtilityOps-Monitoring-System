@@ -1,6 +1,6 @@
 # UtilityOps Monitoring System
 
-![UtilityOps Logo](public/utilityops_logo.png)
+![UtilityOps Logo](src/assets/utilityops_logo.png)
 
 ## About
 
