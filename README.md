@@ -36,15 +36,6 @@ This project is built with modern web technologies:
    npm run dev
    ```
 
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [`AGENTS.md`](AGENTS.md) | AI agent playbook (repo root) |
-| [`docs/architecture.md`](docs/architecture.md) | System and frontend architecture |
-| [`docs/design-system.md`](docs/design-system.md) | UI tokens and component guidelines |
-| [`docs/prd_utilityops_monitoring_system.md`](docs/prd_utilityops_monitoring_system.md) | Product requirements |
-
 ## Deployment
 
 This application is configured for automatic deployment to GitHub Pages using:
